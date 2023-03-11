@@ -4,6 +4,7 @@ namespace App\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\ViewErrorBag;
 use Illuminate\View\Component;
 
 class ErrorMessages extends Component
