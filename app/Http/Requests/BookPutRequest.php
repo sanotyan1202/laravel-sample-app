@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BookPostRequest extends FormRequest
+class BookPutRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,7 @@ class BookPostRequest extends FormRequest
     {
         return [
             'category_id' => 'required|exists:categories,id',
-            'title' => 'required|unique:books|max:100',
+            'title' => 'required|max:100',
             'price' => 'numeric|min:1|max:999999',
             'author_ids' => 'required|array',
             'author_ids.*' => 'required|exists:authors,id',

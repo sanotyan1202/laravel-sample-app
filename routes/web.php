@@ -27,8 +27,13 @@ Route::prefix('admin/books')
     ->controller(BookController::class)
     ->group(function () {
     Route::get('', 'index')->name('index');
-    Route::get('{id}', 'show')->whereNumber('id')->name('show');
-    Route::get('create', 'create')->name('create');
+    Route::get('{book}', 'show')->whereNumber('book')->name('show');Route::get('create', 'create')->name('create');
     Route::post('', 'store')->name('store');
+    Route::get('{book}/edit', 'edit')
+        ->whereNumber('book')->name('edit');
+    Route::put('{book}', 'update')
+        ->whereNumber('book')->name('update');
+    Route::delete('{book}', 'destroy')
+        ->whereNumber('book')->name('destroy');      
 });
     
