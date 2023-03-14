@@ -34,6 +34,8 @@ require __DIR__.'/auth.php';
 
 Route::get('messages', [MessageController::class, 'index']);
 Route::post('messages', [MessageController::class, 'store']);
+Route::delete('messages/{id}/delete', 
+        [MessageController::class, 'destroy']);
 
 Route::prefix('admin')->group(function () {
 

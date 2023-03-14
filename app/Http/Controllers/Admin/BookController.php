@@ -7,6 +7,7 @@ use App\Http\Requests\BookPostRequest;
 use App\Http\Requests\BookPutRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
@@ -16,6 +17,11 @@ use App\Models\Category;
 
 class BookController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Book::class, 'book');
+    }
+
     public function index(): Response
     {
         // 書籍一覧を取得
@@ -32,6 +38,9 @@ class BookController extends Controller
 
     public function show(Book $book): View
     {
+        // example.comユーザーのみ許可
+        $this->authorize('example-com-user');
+
         Log::info('書籍詳細情報が参照されました。ID=' . $book->id);
         
         return view('admin/book/show', compact('book'));
@@ -58,6 +67,7 @@ class BookController extends Controller
         $book->category_id = $request->category_id;
         $book->title = $request->title;
         $book->price = $request->price;
+        $book->admin_id = Auth::id();
 
         DB::transaction(function() use($book, $request) {
 

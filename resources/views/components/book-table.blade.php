@@ -10,23 +10,35 @@
         <tr @if ($loop->even) style="background-color:#E0E0E0" @endif>
             <td>{{ $book->category->title }}</td>
             <td>
-                <a href="{{ route('book.show', $book) }}">
+                @can('example-com-user')
+                    <a href="{{ route('book.show', $book) }}">
+                        {{ $book->title }}
+                    </a>
+                @else
                     {{ $book->title }}
-                </a>
+                @endcan
             </td>
             <td>{{ $book->price }}</td>
             <td>
-                <a href="{{ route('book.edit', $book) }}">
-                    <button>更新</button>
-                </a>
+                @can('update', $book)
+                    <a href="{{ route('book.edit', $book) }}">
+                        <button>更新</button>
+                    </a>
+                @else
+                    <button disabled>更新</button>
+                @endcan
             </td>
             <td>
-                <form action="{{ route('book.destroy', $book) }}" 
-                    method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <input type="submit" value="削除">
-                </form>
+                @cannot('update', $book)
+                    <button disabled>削除</button>
+                @else
+                    <form action="{{ route('book.destroy', $book) }}" 
+                        method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <input type="submit" value="削除">
+                    </form>
+                @endcannot
             </td>
         </tr>
     @endforeach
