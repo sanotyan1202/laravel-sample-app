@@ -38,9 +38,6 @@ class BookController extends Controller
 
     public function show(Book $book): View
     {
-        // example.comユーザーのみ許可
-        $this->authorize('example-com-user');
-
         Log::info('書籍詳細情報が参照されました。ID=' . $book->id);
         
         return view('admin/book/show', compact('book'));
