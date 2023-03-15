@@ -13,8 +13,8 @@ class MessageController extends Controller
     public function index(): View
     {
         // メッセージテーブルのレコードを全件取得
-        $messages = Message::all();
-
+        $messages = Message::orderBy('id')->get();
+        
         // messagesというキーで、ビューへ渡す
         return view('message/index', ['messages' => $messages]);
     }
